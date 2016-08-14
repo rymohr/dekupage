@@ -1,11 +1,12 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createStore } from 'redux';
+import createReducer from '../reducer';
+import bindActionCreators from '../utils/bindActionCreators';
 
 class Provider extends React.Component {
   getChildContext() {
     return {
-      context: this.props.context,
-      dispatch: this.props.dispatch,
+      store: this.props.store,
       actions: this.props.actions
     };
   }
@@ -16,38 +17,19 @@ class Provider extends React.Component {
 }
 
 Provider.childContextTypes = {
-  context: React.PropTypes.object.isRequired,
-  dispatch: React.PropTypes.func.isRequired,
+  store: React.PropTypes.object.isRequired,
   actions: React.PropTypes.object.isRequired
 };
 
-function bindActionCreators(actions, dispatch) {
-  let { actionCreators } = actions;
-  let boundActionCreators = {};
-
-  Object.keys(actionCreators).forEach((action) => {
-    boundActionCreators[action] = (...args) => {
-      return dispatch(actionCreators[action](...args));
-    }
-  })
-
-  return boundActionCreators;
-}
-
 // TODO: ReactDOM.unmountComponentAtNode(domContainerNode) ???
-function createApp(container, store, actions = {}) {
-  let { dispatch } = store;
-  let actionCreators = bindActionCreators(actions, dispatch);
+export default function createApp(element, actions = {}) {
+  let reducer = createReducer(actions, {todos: []});
+  let store = createStore(reducer, window.devToolsExtension && window.devToolsExtension());
+  let actionCreators = bindActionCreators(actions, store.dispatch);
 
-  return (element, context = {}) => {
-    return ReactDOM.render(
-      <Provider context={context}
-                dispatch={dispatch}
-                actions={actionCreators}>
-        {element}
-      </Provider>
-    , container);
-  }
+  return (
+    <Provider store={store} actions={actionCreators}>
+      {element}
+    </Provider>
+  );
 }
-
-export default createApp;

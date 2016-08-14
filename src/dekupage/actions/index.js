@@ -17,6 +17,7 @@ export default function createActions(actions) {
 
 function createActionCreator(type, createPayload) {
   return (...args) => {
-    return {type: type, payload: createPayload(...args)}
+    let payload = createPayload ? createPayload(...args) : {};
+    return { type, payload };
   }
 }

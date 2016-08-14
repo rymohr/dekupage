@@ -1,9 +1,23 @@
 import React from 'react';
 import { createComponent } from '../dekupage';
 
-function render({props, context, dispatch, actions}) {
-  let { addTodo } = actions;
-  return <button class="btn" onClick={() => addTodo(Math.random())}>Add Todo</button>;
+function connect(state) {
+  return {status: state.status};
 }
 
-export default createComponent({ render });
+function render({props, actions}) {
+  let { status } = props;
+  let label, onClick;
+
+  if (status === 'on') {
+    label = "Toggle off";
+    onClick = () => actions.toggleOff();
+  } else {
+    label = "Toggle on";
+    onClick = () => actions.toggleOn();
+  }
+
+  return <button class="btn" onClick={onClick}>{label}</button>;
+}
+
+export default createComponent({ connect, render });

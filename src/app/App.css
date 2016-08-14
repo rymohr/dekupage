@@ -13,4 +13,6 @@
   font-size: 12px;
   font-weight: bold;
   text-transform: uppercase;
+  width: 150px;
+  outline: none;
 }

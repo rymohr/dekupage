@@ -1,23 +1,22 @@
 import React from 'react';
-import { createApp, createReducer } from './dekupage';
-import { createStore } from 'redux';
-import App from './App';
-// import reducer from './app/reducers';
-// import * as actions from './app/actions';
+import ReactDOM from 'react-dom';
+import { createApp } from './dekupage';
+import App from './app/App';
 import actions from './app/actions';
 import './index.css';
 
 let container = document.getElementById('root');
 
-// TODO: createApp(<App />, actions) instead?
-let reducer = createReducer(actions, {todos: []});
-let store = createStore(reducer, window.devToolsExtension && window.devToolsExtension());
-let render = createApp(container, store, actions);
+// TODO: app.reset(state), app.refresh(), app.remove()
 
-function refresh() {
-  render(<App />, store.getState());
-}
+// let render = createApp(App, actions)
+// ReactDOM.render(render(props), container);
 
-store.subscribe(refresh);
+ReactDOM.render(
+  createApp(<App />, actions)
+, container);
 
-refresh();
+
+// setTimeout(() => {
+//   ReactDOM.unmountComponentAtNode(container)
+// }, 10000);

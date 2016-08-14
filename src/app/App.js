@@ -1,10 +1,16 @@
 import React from 'react';
-import { createComponent } from './dekupage';
-import Button from './app/button';
+import { createComponent } from '../dekupage';
+import Button from './button';
 import './App.css';
 
-function render({props, context, dispatch}) {
-  let { todos } = context;
+function connect(state) {
+  return {todos: state.todos, color: state.color};
+}
+
+function render({props, actions}) {
+  let { todos, color } = props;
+
+  debugger;
 
   return (
     <div class="app">
@@ -16,7 +22,7 @@ function render({props, context, dispatch}) {
         {todos.map((todo, i) => <li key={i}>{todo.text}</li>)}
       </ul>
 
-      <div style={{color: context.color}} innerHTML="<strong>this is innerHTML</strong>" />
+      <div style={{ color }} innerHTML="<strong>this is innerHTML</strong>" />
     </div>
   );
 }
@@ -33,4 +39,4 @@ function onRemove({props, context, dispatch}) {
   console.log('dekupage onRemove called');
 }
 
-export default createComponent({ render, onCreate, onUpdate, onRemove });
+export default createComponent({ connect, render, onCreate, onUpdate, onRemove });

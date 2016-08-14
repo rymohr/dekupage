@@ -12,5 +12,3 @@ function reduce(state, { text }) {
 }
 
 export default { dispatch, reduce };
-
-// createAction('ADD_TODO', { dispatch, reduce });

@@ -9,7 +9,8 @@
     "camelcase": "^3.0.0",
     "react": "^15.2.1",
     "react-dom": "^15.2.1",
-    "redux": "^3.5.2"
+    "redux": "^3.5.2",
+    "shallowequal": "^0.2.2"
   },
   "scripts": {
     "start": "react-scripts start",
