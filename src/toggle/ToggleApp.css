@@ -1,11 +1,6 @@
-.app {
-  width: 200px;
-  margin: 0 auto;
-  margin-top: 100px;
-  text-align: center;
-}
+.toggle-app {}
 
-.btn {
+.toggle-btn {
   cursor: pointer;
   padding: 10px 20px;
   background: none;

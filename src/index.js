@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createApp } from './dekupage';
-import App from './app/App';
-import actions from './app/actions';
+import ToggleApp from './toggle/ToggleApp';
+import ToggleActions from './toggle/actions';
+import CounterApp from './counter/CounterApp';
+import CounterActions from './counter/actions';
 import './index.css';
 
 let container = document.getElementById('root');
@@ -13,7 +15,10 @@ let container = document.getElementById('root');
 // ReactDOM.render(render(props), container);
 
 ReactDOM.render(
-  createApp(<App />, actions)
+  <div className='wrapper'>
+    {createApp(<ToggleApp />, ToggleActions, {todos: []})}
+    {createApp(<CounterApp />, CounterActions, {total: 0})}
+  </div>
 , container);
 
 

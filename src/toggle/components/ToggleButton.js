@@ -1,5 +1,5 @@
 import React from 'react';
-import { createComponent } from '../dekupage';
+import { createComponent } from '../../dekupage';
 
 function connect(state) {
   return {status: state.status};
@@ -17,7 +17,7 @@ function render({props, actions}) {
     onClick = () => actions.toggleOn();
   }
 
-  return <button class="btn" onClick={onClick}>{label}</button>;
+  return <button class="toggle-btn" onClick={onClick}>{label}</button>;
 }
 
 export default createComponent({ connect, render });

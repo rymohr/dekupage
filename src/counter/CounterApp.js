@@ -1,6 +1,5 @@
 import React from 'react';
 import { createComponent } from '../dekupage';
-import actions from './actions';
 
 function connect(state) {
   return {total: state.total};
@@ -24,7 +23,7 @@ function render({props, actions}) {
 // })
 
 // if actions are given, component will be wrapped in a <Provider/>
-let Counter = createComponent({ render }); // , { render }, actions
-let CounterApp = createApp(Counter, actions);
+export default createComponent({ connect, render }); // , { render }, actions
 
-export default Counter;
+// let CounterApp = createApp(Counter, actions);
+// export default Counter;

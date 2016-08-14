@@ -22,8 +22,8 @@ Provider.childContextTypes = {
 };
 
 // TODO: ReactDOM.unmountComponentAtNode(domContainerNode) ???
-export default function createApp(element, actions = {}) {
-  let reducer = createReducer(actions, {todos: []});
+export default function createApp(element, actions = {}, initialState = {}) {
+  let reducer = createReducer(actions, initialState);
   let store = createStore(reducer, window.devToolsExtension && window.devToolsExtension());
   let actionCreators = bindActionCreators(actions, store.dispatch);
 
