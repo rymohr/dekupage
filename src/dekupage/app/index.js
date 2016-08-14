@@ -21,7 +21,7 @@ Provider.childContextTypes = {
   actions: React.PropTypes.object.isRequired
 };
 
-// TODO: ReactDOM.unmountComponentAtNode(domContainerNode) ???
+// TODO: higher order component instead?
 export default function createApp(element, actions = {}, initialState = {}) {
   let reducer = createReducer(actions, initialState);
   let store = createStore(reducer, window.devToolsExtension && window.devToolsExtension());

@@ -1,13 +1,13 @@
 import React from 'react';
 
-function translate(component) {
+export function translate(component) {
   let props = translateProps(component.props);
   let children = translateChildren(component.props.children);
 
   return React.cloneElement(component, props, children);
 }
 
-function translateProps(originalProps) {
+export function translateProps(originalProps) {
   let props = {...originalProps};
 
   if ('class' in props) {
@@ -23,7 +23,7 @@ function translateProps(originalProps) {
   return props;
 }
 
-function translateChildren(children) {
+export function translateChildren(children) {
   return React.Children.map(children, child => {
     return React.isValidElement(child) ? translate(child) : child;
   })

@@ -1,26 +1,27 @@
 import React from 'react';
 import createStore from 'redux';
 import createApp from './app';
+import createElement from './utils/createElement';
 import createComponent from './component';
 import createActions from './actions';
 import createReducer from './reducer';
-
-function createElement(type, props, children) {
-  return React.createElement(type, props, children);
-}
+import loadActions from './utils/loadActions';
 
 let Dekupage = {
   createApp,
   createStore,
   createElement,
-  createComponent
+  createComponent,
+  loadActions
 }
 
 export {
   Dekupage as default,
   createStore,
   createApp,
+  createElement,
   createComponent,
   createActions,
-  createReducer
+  createReducer,
+  loadActions
 }

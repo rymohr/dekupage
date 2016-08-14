@@ -3,11 +3,12 @@ import ReactDOM from 'react-dom';
 import shallowEqual from 'shallowequal';
 import translate from '../utils/translate';
 
-function createComponent(component) {
+function createComponent(component, actions) {
   let pure = true;
   let connected = typeof component.connect === 'function';
 
   class DekupageComponent extends React.Component {
+    // TODO: displayName
     constructor(props, context) {
       super(props, context);
 
@@ -95,7 +96,11 @@ function createComponent(component) {
     actions: React.PropTypes.object.isRequired
   };
 
-  return DekupageComponent;
+  if (actions) {
+    // TODO: return createApp(DekupageComponent, actions);
+  } else {
+    return DekupageComponent;
+  }
 }
 
 export default createComponent;

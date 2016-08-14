@@ -1,6 +1,2 @@
-import { createActions } from '../../dekupage';
-
-export default createActions({
-  INCREMENT: require('./increment').default,
-  DECREMENT: require('./decrement').default,
-})
+import { loadActions } from '../../dekupage';
+export default loadActions(require.context('.'));

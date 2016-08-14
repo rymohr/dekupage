@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createApp } from './dekupage';
+import { loadActions, createApp } from './dekupage';
 import ToggleApp from './toggle/ToggleApp';
 import ToggleActions from './toggle/actions';
 import CounterApp from './counter/CounterApp';
@@ -14,9 +14,12 @@ let container = document.getElementById('root');
 // let render = createApp(App, actions)
 // ReactDOM.render(render(props), container);
 
+// <ToggleApp initialState={{status: 'off', color: 'red'}}
 ReactDOM.render(
   <div className='wrapper'>
-    {createApp(<ToggleApp />, ToggleActions, {todos: []})}
+    {createApp(<ToggleApp />, ToggleActions, {status: 'on', color: 'red'})}
+    {createApp(<CounterApp />, CounterActions, {total: 0})}
+    {createApp(<CounterApp />, CounterActions, {total: 0})}
     {createApp(<CounterApp />, CounterActions, {total: 0})}
   </div>
 , container);
