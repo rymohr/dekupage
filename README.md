@@ -8,6 +8,12 @@ Look into aphrodite: https://github.com/Khan/aphrodite
 
 Look into zaphod: http://zaphod.surge.sh/
 
+### Decide on local state handling
+
+Do we want to store component state with the component or in the global state tree?
+
+https://circleci.com/blog/local-state-global-concerns/
+
 ### Handle prop translations at jsx level
 
 Can use `@jsx` directive to handle the prop transformations _before_ handing them off
