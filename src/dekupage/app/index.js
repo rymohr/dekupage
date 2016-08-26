@@ -3,7 +3,7 @@ import { createStore } from 'redux';
 import createReducer from '../reducer';
 import bindActionCreators from '../utils/bindActionCreators';
 
-class Provider extends React.Component {
+class DekupageProvider extends React.Component {
   getChildContext() {
     return {
       store: this.props.store,
@@ -16,20 +16,40 @@ class Provider extends React.Component {
   }
 }
 
-Provider.childContextTypes = {
+DekupageProvider.childContextTypes = {
   store: React.PropTypes.object.isRequired,
   actions: React.PropTypes.object.isRequired
 };
 
-// TODO: higher order component instead?
-export default function createApp(element, actions = {}, initialState = {}) {
-  let reducer = createReducer(actions, initialState);
-  let store = createStore(reducer, window.devToolsExtension && window.devToolsExtension());
-  let actionCreators = bindActionCreators(actions, store.dispatch);
+// Had to use a higher order component so we could render dekupage apps
+// just like any other component and still be able to render multiple
+// independent instances of the app.
+//
+// TODO: reset(state), refresh(), remove() ?
+export default function createApp(Component, model = {}, actions = {}) {
+  class DekupageApp extends React.Component {
+    constructor(props, context) {
+      super(props, context);
 
-  return (
-    <Provider store={store} actions={actionCreators}>
-      {element}
-    </Provider>
-  );
+      this.reducer = createReducer(actions, model);
+      this.store = createStore(this.reducer, window.devToolsExtension && window.devToolsExtension());
+      this.actionCreators = bindActionCreators(actions, this.store.dispatch);
+
+      // TODO: defer until componentWillMount?
+      let { init } = this.actionCreators;
+      let { initialState } = props;
+
+      init && init(initialState);
+    }
+
+    render() {
+      return (
+        <DekupageProvider store={this.store} actions={this.actionCreators}>
+          <Component {...this.props} />
+        </DekupageProvider>
+      )
+    }
+  }
+
+  return DekupageApp;
 }

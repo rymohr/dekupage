@@ -1,2 +1,2 @@
-import { loadActions } from '../../dekupage';
+import { loadActions } from '../../../dekupage';
 export default loadActions(require.context('.'));

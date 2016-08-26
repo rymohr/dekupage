@@ -1,7 +1,6 @@
 /* @jsx createElement */
-import { createElement, createComponent } from '../dekupage';
-import ToggleButton from './components/ToggleButton';
-import './ToggleApp.css';
+import { createElement, createComponent } from '../../../dekupage';
+import ToggleButton from './ToggleButton';
 
 function connect(state) {
   return {color: state.color};
@@ -16,7 +15,7 @@ function render({props, actions}) {
         <ToggleButton />
       </p>
 
-      <div style={{ color }} innerHTML="<strong>this is innerHTML</strong>" />
+      <p style={{ color }} innerHTML="<strong>this is innerHTML</strong>" />
     </div>
   );
 }

@@ -1,5 +1,6 @@
-import React from 'react';
-import { createComponent } from '../../dekupage';
+/* @jsx createElement */
+import { createElement, createComponent } from '../../../dekupage';
+import './ToggleButton.css';
 
 function connect(state) {
   return {status: state.status};

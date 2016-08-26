@@ -1,30 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { loadActions, createApp } from './dekupage';
-import ToggleApp from './toggle/ToggleApp';
-import ToggleActions from './toggle/actions';
-import CounterApp from './counter/CounterApp';
-import CounterActions from './counter/actions';
+import ToggleApp from './app/toggle/ToggleApp';
+import CounterApp from './app/counter/CounterApp';
 import './index.css';
 
-let container = document.getElementById('root');
+class Container extends React.Component {
+  render() {
+    return (
+      <div className='wrapper'>
+        <button onClick={() => this.forceUpdate()}>force update</button>
+        <ToggleApp initialState={{status: 'off', color: 'red'}} />
+        <ToggleApp initialState={{status: 'off', color: 'red'}} />
+        <ToggleApp initialState={{status: 'on', color: 'blue'}} />
+        <CounterApp initialState={{total: 0}} />
+        <CounterApp initialState={{total: 100}} />
+        <CounterApp initialState={{total: 1000}} />
+      </div>
+    )
+  }
+}
 
-// TODO: app.reset(state), app.refresh(), app.remove()
-
-// let render = createApp(App, actions)
-// ReactDOM.render(render(props), container);
-
-// <ToggleApp initialState={{status: 'off', color: 'red'}}
-ReactDOM.render(
-  <div className='wrapper'>
-    {createApp(<ToggleApp />, ToggleActions, {status: 'on', color: 'red'})}
-    {createApp(<CounterApp />, CounterActions, {total: 0})}
-    {createApp(<CounterApp />, CounterActions, {total: 0})}
-    {createApp(<CounterApp />, CounterActions, {total: 0})}
-  </div>
-, container);
-
-
-// setTimeout(() => {
-//   ReactDOM.unmountComponentAtNode(container)
-// }, 10000);
+ReactDOM.render(<Container />, document.getElementById('root'));

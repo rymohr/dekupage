@@ -1,6 +1,9 @@
 import React from 'react';
 import { translateProps } from './translate';
 
-export default function createElement(type, props, children) {
-  return React.createElement(type, translateProps(props), children);
+export default function createElement(type, props, ...children) {
+  let reactProps = translateProps(props);
+  let reactChildren = 'dangerouslySetInnerHTML' in reactProps ? null : children;
+
+  return React.createElement(type, reactProps, reactChildren);
 }

@@ -14,7 +14,7 @@ export default function loadActions(req) {
     let actionName = key.match(/(\w+)[.]js/)[1];
     let actionType = constantCase(actionName);
 
-    actions[actionType] = req(key).default;
+    actions[actionType] = req(key);
   })
 
   return createActions(actions);

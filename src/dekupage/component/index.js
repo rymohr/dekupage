@@ -91,6 +91,8 @@ function createComponent(component, actions) {
     }
   }
 
+  DekupageComponent.displayName = component.name;
+
   DekupageComponent.contextTypes = {
     store: React.PropTypes.object.isRequired,
     actions: React.PropTypes.object.isRequired
