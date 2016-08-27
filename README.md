@@ -3,8 +3,7 @@
 - components + models + actions
 - functional deku-inspired interface
 - redux state management / devtools
-- react ecosystem
-- can be rendered within react components and contain react components
+- react friendly (can be rendered within and contain react components)
 
 ## Components
 
@@ -32,17 +31,18 @@ function render({props, actions}) {
 export default createComponent({ connect, render });
 ```
 
-Using the `/* @jsx createElement */` pragma allows you to use:
+Using the `/* @jsx createElement */` pragma allows you to:
 
-- `class` instead of `className`
-- `innerHTML={html}` instead of `dangerouslySetInnerHTML={{__html: html}}`
+- use `class` instead of `className`
+- use `innerHTML={html}` instead of `dangerouslySetInnerHTML={{__html: html}}`
 
 You are free to use react's default jsx processor if that kind of stuff
 doesn't bother you.
 
 ## Applications
 
-Apps are higher-order containers that connect components to actions / state.
+The `createApp` helper packages a component + model + actions into
+a higher-order component that can be renderer just like any other react component:
 
 ```js
 // TodoApp.jsx
@@ -53,8 +53,6 @@ import TodoActions from './actions';
 
 export default createApp(TodoList, TodoModel, TodoActions);
 ```
-
-Dekupage applications can then be rendered just like any other react component:
 
 ```js
 // index.js
@@ -79,18 +77,19 @@ function render({ props, actions }) {
 }
 ```
 
-Each action is defined in its own file. Direct access to the dispatcher is
-not allowed.
+Actions are defined within `./actions/` using one file per action.
 
 ```js
 // actions/addTodo.js
 
-// the dispatch method is responsible for turning the arguments into a payload
+// The dispatch method is responsible for creating the action payload from
+// the given arguments. Since this action is defined within `addTodo.js` it
+// will be exposed to components as `actions.addTodo(text)`.
 export function dispatch(text) {
   return { text };
 }
 
-// the reduce method is responsible for applying the action to the model
+// The reduce method is responsible for applying the action to the model
 export function reduce(model, { text }) {
   return {
     ...model,
@@ -99,7 +98,10 @@ export function reduce(model, { text }) {
 }
 ```
 
-Actions can dispatch other actions (synchronously or asynchronously) by
+Because dekupage is backed by redux, all updates should be immutable
+(as painful as that can be).
+
+Action creators can dispatch other actions (synchronously or asynchronously) by
 returning a function from `dispatch`. This function will be called with
 the pre-bound action creators (the same ones passed to `render`).
 
@@ -122,6 +124,7 @@ export function reduce(model, todoList, todoText) {
   // todoText => 'document dekupage'
 }
 
+// components/AddTodo.js
 function render({ actions }) {
   let { addTodo } = actions;
   return <button onClick={() => addTodo('work', 'document dekupage')}>...</button>;
@@ -129,9 +132,9 @@ function render({ actions }) {
 ```
 
 If you're using webpack you can use the `loadActions` helper to automatically
-load all of the actions within a directory. The action name will be the name
-of the file (eg `addTodo`) and the action type will be the snake-cased version
-of the file (eg `ADD_TODO`).
+load all of the actions within a directory. The action name will be equal to
+the name of the file (eg `addTodo`) and the action type will be the snake-cased
+version of the file (eg `ADD_TODO`).
 
 ```js
 // actions/index.js
@@ -141,7 +144,7 @@ export default loadActions(require.context('.'));
 
 ## State / models
 
-State is managed through "models" and must be an object.
+Each application is backed by a single model which stores the application's state.
 
 ```
 // model/index.js
