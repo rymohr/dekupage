@@ -174,6 +174,11 @@ ReactDOM.render(
 
 ## TODO
 
+### Allow dekupage components to be injected into custom redux tree?
+
+Would be easy to grab the store but we wouldn't have access to the actions.
+Might not make sense to support this in that case.
+
 ### Decide on inline style handling
 
 Look into aphrodite: https://github.com/Khan/aphrodite
